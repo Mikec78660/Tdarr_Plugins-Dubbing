@@ -24,24 +24,20 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-      - name: Add upstream remote
-        run: |
-          git remote add upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Mikec78660/Tdarr_Plugins
-          git fetch upstream
-      - name: Sync plugin to main repo
+      - name: Setup workspace
         run: |
           # Create a temporary directory for the sync
           mkdir -p /tmp/sync
           cd /tmp/sync
-       
+          
           # Clone the main repo
           git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Mikec78660/Tdarr_Plugins.git
           cd Tdarr_Plugins
-       
+          
           # Create the plugin directory structure if it doesn't exist
           mkdir -p FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0
           mkdir -p FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0
-       
+          
           # Copy plugin files from current repo to main repo
           cp -r ../FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/* FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/
           cp -r ../FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/* FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/
