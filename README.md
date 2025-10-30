@@ -1,5 +1,9 @@
 # Tdarr_Plugins-Dubbing
 
+## ⚠️ EXPERIMENTAL PLUGIN WARNING ⚠️
+
+This AI-Dubbing plugin is experimental and may contain bugs or unstable functionality. Use at your own risk. The plugin is still under active development and may not work as expected in all scenarios.
+
 This repository contains Tdarr Flow plugins for AI-powered dubbing and audio processing.
 
 ## AI-Dubbing Plugin
@@ -38,6 +42,7 @@ The plugin accepts the following inputs:
 - Tdarr Server v2.11.01 or higher
 - FFmpeg installed and accessible
 - Access to an AI transcription/translation/synthesis API service
+- The plugin is designed to work with the Speaches AI service: https://github.com/speaches-ai/speaches (openai compatible API endpoints that can run locally)
 
 ### Usage
 
@@ -76,3 +81,40 @@ Run tests:
 5. Refresh the browser and Tdarr will pick up the changes
 
 Note, `pluginsDir` directories that contain a `.git` folder (such as when cloning this repo) will cause Tdarr to skip plugin updates to prevent overwriting development changes.
+
+## Plugin Development Workflow
+
+This repository uses GitHub Actions to automatically sync plugin updates to the main Tdarr_Plugins repository.
+
+### Automated Sync
+
+When changes are pushed to the `main` branch of this repository, the GitHub Action will:
+1. Copy the plugin files to the main Tdarr_Plugins repository
+2. Commit and push the changes to the main repository
+
+### Manual Sync
+
+To manually sync changes:
+1. Clone the main Tdarr_Plugins repository
+2. Copy the plugin files from `FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/` and `FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/` 
+3. Commit and push to the main repository
+
+### Current Status
+
+The workflow is now configured and active. The AI-Dubbing plugin has been updated with an experimental warning and will automatically sync to the main Tdarr_Plugins repository when changes are pushed to the main branch.
+
+### Repository Structure
+
+```
+FlowPlugins/
+└─ CommunityFlowPlugins/
+   └─ audio/
+      └─ AI-Dubbing/
+          └─ 1.0.0/
+             └─ index.js
+FlowPluginsTs/
+└─ CommunityFlowPlugins/
+   └─ audio/
+      └─ AI-Dubbing/
+          └─ 1.0.0/
+             └─ index.ts

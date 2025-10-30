@@ -1,0 +1,45 @@
+name: Sync AI-Dubbing Plugin to Tdarr_Plugins
+
+on:
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Mikec78660/Tdarr_Plugins
+          git fetch upstream
+      - name: Sync plugin to main repo
+        run: |
+          # Create a temporary directory for the sync
+          mkdir -p /tmp/sync
+          cd /tmp/sync
+       
+          # Clone the main repo
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Mikec78660/Tdarr_Plugins.git
+          cd Tdarr_Plugins
+       
+          # Create the plugin directory structure if it doesn't exist
+          mkdir -p FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0
+          mkdir -p FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0
+       
+          # Copy plugin files from current repo to main repo
+          cp -r ../FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/* FlowPlugins/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/
+          cp -r ../FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/* FlowPluginsTs/CommunityFlowPlugins/audio/AI-Dubbing/1.0.0/
+          
+          # Commit and push to main repo
+          git add .
+          git commit -m "Sync AI-Dubbing plugin updates from AI-Dubbing repo" || echo "No changes to commit"
+          git push upstream main
